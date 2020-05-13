@@ -93,6 +93,7 @@ $code=<<___;
 .align	32
 _aesni_ctr32_ghash_6x:
 .cfi_startproc
+	endbranch
 	vmovdqu		0x20($const),$T2	# borrow $T2, .Lone_msb
 	sub		\$6,$len
 	vpxor		$Z0,$Z0,$Z0		# $Z0   = 0
@@ -414,6 +415,7 @@ $code.=<<___;
 .align	32
 aesni_gcm_decrypt:
 .cfi_startproc
+	endbranch
 	xor	$ret,$ret
 	cmp	\$0x60,$len			# minimal accepted length
 	jb	.Lgcm_dec_abort
@@ -548,6 +550,7 @@ $code.=<<___;
 .align	32
 _aesni_ctr32_6x:
 .cfi_startproc
+	endbranch
 	vmovdqu		0x00-0x80($key),$Z0	# borrow $Z0 for $rndkey
 	vmovdqu		0x20($const),$T2	# borrow $T2, .Lone_msb
 	lea		-1($rounds),%r13
@@ -642,6 +645,7 @@ _aesni_ctr32_6x:
 .align	32
 aesni_gcm_encrypt:
 .cfi_startproc
+	endbranch
 	xor	$ret,$ret
 	cmp	\$0x60*3,$len			# minimal accepted length
 	jb	.Lgcm_enc_abort
@@ -1086,6 +1090,7 @@ $code=<<___;	# assembler is too old
 .type	aesni_gcm_encrypt,\@abi-omnipotent
 aesni_gcm_encrypt:
 .cfi_startproc
+	endbranch
 	xor	%eax,%eax
 	ret
 .cfi_endproc
@@ -1095,6 +1100,7 @@ aesni_gcm_encrypt:
 .type	aesni_gcm_decrypt,\@abi-omnipotent
 aesni_gcm_decrypt:
 .cfi_startproc
+	endbranch
 	xor	%eax,%eax
 	ret
 .cfi_endproc
